@@ -24,8 +24,8 @@
     repo_url: "http://charts.rancher.io/"
   when: inventory_hostname in groups['master_nodes']
 
-- name: find {{ amp.data_iface }}'s subnet for RAN
-  shell: ip route | grep {{ amp.data_iface }} | awk '/kernel/ {print $1}' | head -1
+- name: find {{ roc.data_iface }}'s subnet for RAN
+  shell: ip route | grep {{ roc.data_iface }} | awk '/kernel/ {print $1}' | head -1
   register: result
   when: inventory_hostname in groups['master_nodes']
   become: true

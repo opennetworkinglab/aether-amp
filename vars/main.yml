@@ -5,11 +5,9 @@ k8s:
         master: "templates/rke2-master-params.yaml"
         worker: "templates/rke2-worker-params.yaml"
 
-amp:
-  standalone: "false"
-  data_iface: ens18
-
 roc:
+  standalone: "false"
+  data_iface: enp193s0f0
   helm:
     chart_ref: aether/aether-roc-umbrella
     chart_version: 2.1.35
@@ -19,7 +17,7 @@ atomix:
     chart_ref: atomix/atomix-runtime
     chart_version: 0.1.9
 
-onos_operator:
+onos-operator:
   helm:
     chart_ref: onosproject/onos-operator
     chart_version: 0.5.6
