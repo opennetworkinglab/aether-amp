@@ -1,0 +1,91 @@
+---
+
+- name: add atomix chart repo
+  kubernetes.core.helm_repository:
+    name: atomix
+    repo_url: "https://charts.atomix.io"
+  when: inventory_hostname in groups['master_nodes']
+
+- name: add onosproject chart repo
+  kubernetes.core.helm_repository:
+    name: onosproject
+    repo_url: "https://charts.onosproject.org"
+  when: inventory_hostname in groups['master_nodes']
+
+- name: add aether chart repo
+  kubernetes.core.helm_repository:
+    name: aether
+    repo_url: "https://charts.aetherproject.org"
+  when: inventory_hostname in groups['master_nodes']
+
+- name: add rancher chart repo
+  kubernetes.core.helm_repository:
+    name: rancher
+    repo_url: "http://charts.rancher.io/"
+  when: inventory_hostname in groups['master_nodes']
+
+- name: find {{ amp.data_iface }}'s subnet for RAN
+  shell: ip route | grep {{ amp.data_iface }} | awk '/kernel/ {print $1}' | head -1
+  register: result
+  when: inventory_hostname in groups['master_nodes']
+  become: true
+
+# TODO: check if interface subnet is valid
+- set_fact:
+    ran_subnet: "{{ result.stdout }}"
+  when: inventory_hostname in groups['master_nodes']
+
+- name: remove /tmp/roc-values.yaml
+  file:
+    path: "/tmp/roc-values.yaml"
+    state: absent
+  when: inventory_hostname in groups['master_nodes']
+
+- name: copy roc-values.yaml to /tmp/roc-values.yaml
+  template:
+    src: roles/roc/templates/roc-values.yaml
+    dest: "/tmp/roc-values.yaml"
+  when: inventory_hostname in groups['master_nodes']
+
+- name: deploy atomix
+  kubernetes.core.helm:
+    update_repo_cache: true
+    name: atomix
+    release_namespace: kube-system
+    create_namespace: true
+    chart_ref: "{{ atomix.helm.chart_ref }}"
+    chart_version: "{{ atomix.helm.chart_version }}"
+    values_files:
+      - /tmp/roc-values.yaml
+    wait: true
+    force: true
+  when: inventory_hostname in groups['master_nodes']
+
+- name: deploy onos-operator
+  kubernetes.core.helm:
+    update_repo_cache: true
+    name: onos-operator
+    release_namespace: kube-system
+    create_namespace: true
+    chart_ref: "{{ onos-operator.helm.chart_ref }}"
+    chart_version: "{{ onos-operator.helm.chart_version }}"
+    values_files:
+      - /tmp/roc-values.yaml
+    wait: true
+    force: true
+  when: inventory_hostname in groups['master_nodes']
+
+- name: deploy aether roc
+  kubernetes.core.helm:
+    update_repo_cache: true
+    name: aether-roc
+    release_namespace: aether-roc
+    create_namespace: true
+    chart_ref: "{{ roc.helm.chart_ref }}"
+    chart_version: "{{ roc.helm.chart_version }}"
+    values_files:
+      - /tmp/roc-values.yaml
+    wait: true
+    force: true
+  when: inventory_hostname in groups['master_nodes']
+
