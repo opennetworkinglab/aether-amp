@@ -34,8 +34,8 @@
   when: inventory_hostname in groups['master_nodes']
   become: true
 
-- name: find {{ core.data_iface }}'s netplan network directory
-  shell: basename $(find /*/systemd/network -maxdepth 1 -not -type d -name '*{{ core.data_iface }}.network' -print)
+- name: find {{ amp.data_iface }}'s netplan network directory
+  shell: basename $(find /*/systemd/network -maxdepth 1 -not -type d -name '*{{ amp.data_iface }}.network' -print)
   register: result
   when: inventory_hostname in groups['master_nodes']
   become: true
@@ -88,20 +88,20 @@
   when: inventory_hostname in groups['master_nodes']
   become: true
 
-# - name: "add iptable rule: forward from {{ core.data_iface }} to access"
+# - name: "add iptable rule: forward from {{ amp.data_iface }} to access"
 #   iptables:
 #     chain: FORWARD
-#     in_interface: "{{ core.data_iface }}"
+#     in_interface: "{{ amp.data_iface }}"
 #     out_interface: access
 #     jump: ACCEPT
 #   when: inventory_hostname in groups['master_nodes']
 #   become: true
 
-# - name: "add iptable rule: forward from access to {{ core.data_iface }}"
+# - name: "add iptable rule: forward from access to {{ amp.data_iface }}"
 #   iptables:
 #     chain: FORWARD
 #     in_interface: access
-#     out_interface: "{{ core.data_iface }}"
+#     out_interface: "{{ amp.data_iface }}"
 #     jump: ACCEPT
 #   when: inventory_hostname in groups['master_nodes']
 #   become: true

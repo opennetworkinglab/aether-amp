@@ -24,8 +24,8 @@
     repo_url: "http://charts.rancher.io/"
   when: inventory_hostname in groups['master_nodes']
 
-- name: find {{ roc.data_iface }}'s subnet for RAN
-  shell: ip route | grep {{ roc.data_iface }} | awk '/kernel/ {print $1}' | head -1
+- name: find {{ amp.data_iface }}'s subnet for RAN
+  shell: ip route | grep {{ amp.data_iface }} | awk '/kernel/ {print $1}' | head -1
   register: result
   when: inventory_hostname in groups['master_nodes']
   become: true
@@ -53,8 +53,8 @@
     name: atomix
     release_namespace: kube-system
     create_namespace: true
-    chart_ref: "{{ atomix.helm.chart_ref }}"
-    chart_version: "{{ atomix.helm.chart_version }}"
+    chart_ref: "{{ amp.atomix.helm.chart_ref }}"
+    chart_version: "{{ amp.atomix.helm.chart_version }}"
     values_files:
       - /tmp/roc-values.yaml
     wait: true
@@ -67,8 +67,8 @@
     name: onos-operator
     release_namespace: kube-system
     create_namespace: true
-    chart_ref: "{{ onos-operator.helm.chart_ref }}"
-    chart_version: "{{ onos-operator.helm.chart_version }}"
+    chart_ref: "{{ amp.onos-operator.helm.chart_ref }}"
+    chart_version: "{{ amp.onos-operator.helm.chart_version }}"
     values_files:
       - /tmp/roc-values.yaml
     wait: true
@@ -81,8 +81,8 @@
     name: aether-roc
     release_namespace: aether-roc
     create_namespace: true
-    chart_ref: "{{ roc.helm.chart_ref }}"
-    chart_version: "{{ roc.helm.chart_version }}"
+    chart_ref: "{{ amp.roc.helm.chart_ref }}"
+    chart_version: "{{ amp.roc.helm.chart_version }}"
     values_files:
       - /tmp/roc-values.yaml
     wait: true

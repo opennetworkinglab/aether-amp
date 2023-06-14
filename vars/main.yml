@@ -5,29 +5,30 @@ k8s:
         master: "templates/rke2-master-params.yaml"
         worker: "templates/rke2-worker-params.yaml"
 
-roc:
-  standalone: "false"
+amp:
   data_iface: enp193s0f0
-  helm:
-    chart_ref: aether/aether-roc-umbrella
-    chart_version: 2.1.35
 
-atomix:
-  helm:
-    chart_ref: atomix/atomix-runtime
-    chart_version: 0.1.9
+  roc:
+    helm:
+      chart_ref: aether/aether-roc-umbrella
+      chart_version: 2.1.35
 
-onos-operator:
-  helm:
-    chart_ref: onosproject/onos-operator
-    chart_version: 0.5.6
+  atomix:
+    helm:
+      chart_ref: atomix/atomix-runtime
+      chart_version: 0.1.9
 
-monitor:
-  helm:
-    chart_ref: rancher/rancher-monitoring
-    chart_version: 101.0.0+up19.0.3
+  onos-operator:
+    helm:
+      chart_ref: onosproject/onos-operator
+      chart_version: 0.5.6
 
-monitor-crd:
-  helm:
-    chart_ref: rancher/rancher-monitoring-crd
-    chart_version: 101.0.0+up19.0.3
+  monitor:
+    helm:
+      chart_ref: rancher/rancher-monitoring
+      chart_version: 101.0.0+up19.0.3
+
+  monitor-crd:
+    helm:
+      chart_ref: rancher/rancher-monitoring-crd
+      chart_version: 101.0.0+up19.0.3

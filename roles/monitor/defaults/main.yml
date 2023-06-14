@@ -1,7 +1,13 @@
-core:  
-  standalone: "true"
-  data_iface: data
-  
-  helm:
-    chart_ref: aether/sd-core
-    chart_version: 0.12.6 
+amp:
+  data_iface: enp193s0f0
+
+  monitor:
+    helm:
+      chart_ref: rancher/rancher-monitoring
+      chart_version: 101.0.0+up19.0.3
+
+  monitor-crd:
+    helm:
+      chart_ref: rancher/rancher-monitoring-crd
+      chart_version: 101.0.0+up19.0.3
+

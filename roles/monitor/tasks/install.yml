@@ -53,8 +53,8 @@
     name: rancher-monitoring
     release_namespace: cattle-monitoring-system
     create_namespace: true
-    chart_ref: "{{ monitor.helm.chart_ref }}"
-    chart_version: "{{ monitor.helm.chart_version }}"
+    chart_ref: "{{ amp.monitor.helm.chart_ref }}"
+    chart_version: "{{ amp.monitor.helm.chart_version }}"
     values_files:
       - /tmp/monitor-values.yaml
     wait: true

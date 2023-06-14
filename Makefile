@@ -24,11 +24,11 @@ amp-pingall:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/pingall.yml \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
-#### b. Provision k8s ####
-amp-install: k8s-install router-install amp-roc-install amp-monitor-install
-amp-uninstall: amp-roc-uninstall amp-monitor-uninstall router-uninstall k8s-uninstall
+#### b. Provision k8s with AMP ####
+amp-install: k8s-install router-install roc-install monitor-install
+amp-uninstall: roc-uninstall monitor-uninstall router-uninstall k8s-uninstall
 
-#### c. Provision router ####
+#### c. Provision Router ####
 router-install: 
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/router.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)

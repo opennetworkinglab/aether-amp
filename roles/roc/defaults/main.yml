@@ -1,17 +1,18 @@
-roc:
-  standalone: "false"
-  data_iface: ens18
-  helm:
-    chart_ref: aether/aether-roc-umbrella
-    chart_version: 2.1.35
+amp:
+  data_iface: enp193s0f0
+  
+  roc:
+    helm:
+      chart_ref: aether/aether-roc-umbrella
+      chart_version: 2.1.35
 
-atomix:
-  helm:
-    chart_ref: atomix/atomix-runtime
-    chart_version: 0.1.9
+  atomix:
+    helm:
+      chart_ref: atomix/atomix-runtime
+      chart_version: 0.1.9
 
-onos-operator:
-  helm:
-    chart_ref: onosproject/onos-operator
-    chart_version: 0.5.6
+  onos-operator:
+    helm:
+      chart_ref: onosproject/onos-operator
+      chart_version: 0.5.6
 
