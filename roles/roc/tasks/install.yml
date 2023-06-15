@@ -47,7 +47,7 @@
     dest: "/tmp/roc-values.yaml"
   when: inventory_hostname in groups['master_nodes']
 
-- name: deploy atomix
+- name: deploy atomix from {{ amp.atomix.helm.chart_ref }}
   kubernetes.core.helm:
     update_repo_cache: true
     name: atomix
@@ -61,28 +61,28 @@
     force: true
   when: inventory_hostname in groups['master_nodes']
 
-- name: deploy onos-operator
+- name: deploy onos-operator from {{ amp.onosproject.helm.chart_ref }}
   kubernetes.core.helm:
     update_repo_cache: true
     name: onos-operator
     release_namespace: kube-system
     create_namespace: true
-    chart_ref: "{{ amp.onos-operator.helm.chart_ref }}"
-    chart_version: "{{ amp.onos-operator.helm.chart_version }}"
+    chart_ref: "{{ amp.onosproject.helm.chart_ref }}"
+    chart_version: "{{ amp.onosproject.helm.chart_version }}"
     values_files:
       - /tmp/roc-values.yaml
     wait: true
     force: true
   when: inventory_hostname in groups['master_nodes']
 
-- name: deploy aether roc
+- name: deploy aether roc from {{ amp.aether.helm.chart_ref }}
   kubernetes.core.helm:
     update_repo_cache: true
     name: aether-roc
     release_namespace: aether-roc
     create_namespace: true
-    chart_ref: "{{ amp.roc.helm.chart_ref }}"
-    chart_version: "{{ amp.roc.helm.chart_version }}"
+    chart_ref: "{{ amp.aether.helm.chart_ref }}"
+    chart_version: "{{ amp.aether.helm.chart_version }}"
     values_files:
       - /tmp/roc-values.yaml
     wait: true
