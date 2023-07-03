@@ -1,57 +1,92 @@
 ---
 
-- name: remove aether 5gc
+- name: remove rancher-monitoring from cattle-monitoring-system
   kubernetes.core.helm:
-    name: sd-core
-    release_namespace: omec
+    name: rancher-monitoring
+    release_namespace: cattle-monitoring-system
     state: absent
     wait: true
   when: inventory_hostname in groups['master_nodes']
   ignore_errors: yes
 
-- name: remove rancher chart repo
-  kubernetes.core.helm_repository:
-    name: rancher
+- name: remove rancher-monitoring-crd from cattle-monitoring-system
+  kubernetes.core.helm:
+    name: rancher-monitoring-crd
+    release_namespace: cattle-monitoring-system
     state: absent
-    repo_url: "http://charts.rancher.io/"
+    wait: true
   when: inventory_hostname in groups['master_nodes']
   ignore_errors: yes
 
-- name: remove aether chart repo
-  kubernetes.core.helm_repository:
-    name: aether
-    state: absent
-    repo_url: "https://charts.aetherproject.org"
+- name: delete namespace cattle-dashboards cattle-monitoring-system
+  shell: |
+    kubectl delete namespace cattle-dashboards cattle-monitoring-system
   when: inventory_hostname in groups['master_nodes']
   ignore_errors: yes
 
-- name: remove onosproject chart repo
-  kubernetes.core.helm_repository:
-    name: onosproject
+- name: remove /tmp/monitor-values.yaml
+  file:
+    path: "/tmp/monitor-values.yaml"
     state: absent
-    repo_url: "https://charts.onosproject.org"
   when: inventory_hostname in groups['master_nodes']
-  ignore_errors: yes
-
-- name: remove atomix chart repo
-  kubernetes.core.helm_repository:
-    name: atomix
+  
+- name: remove openshift python package
+  pip:
+    name: openshift==0.12.1
     state: absent
-    repo_url: "https://charts.atomix.io"
-  when: inventory_hostname in groups['master_nodes']
-  ignore_errors: yes
+    executable: pip3
+  become: true
 
-- name: remove cord chart repo
-  kubernetes.core.helm_repository:
-    name: cord
+- name: remove python-setuptools package
+  apt:
+    name: python-setuptools
     state: absent
-    repo_url: "https://charts.opencord.org"
-  when: inventory_hostname in groups['master_nodes']
-  ignore_errors: yes
+    purge: yes
+  become: true
 
-# - name: waiting for aether pods to terminate
-#   shell: |
-#     /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml wait -n omec --for=delete --all=true -l app!=ue pod --timeout=180s || true
-#   when: inventory_hostname in groups['master_nodes']
+- name: remove python3-venv package
+  apt:
+    name: python3-venv
+    state: absent
+    purge: yes
+  become: true
+
+# - name: remove python3-pip package
+#   apt:
+#     name: python3-pip
+#     state: absent
+#     purge: yes
 #   become: true
-#   ignore_errors: yes
+
+# - name: remove python3 package
+#   apt:
+#     name: python3
+#     state: absent
+#     purge: yes
+#   become: true
+
+- name: remove software-properties-common package
+  apt:
+    name: software-properties-common
+    state: absent
+    purge: yes
+  become: true
+
+- name: remove make package
+  apt:
+    name: make
+    state: absent
+    purge: yes
+  become: true
+
+- name: remove sshpass package
+  apt:
+    name: sshpass
+    state: absent
+    purge: yes
+  become: true
+
+- name: update cache
+  apt:
+    update_cache: yes
+  become: true

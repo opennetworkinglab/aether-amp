@@ -1,0 +1,57 @@
+---
+
+- name: find ONOS_CLI_POD  
+  shell: kubectl -n aether-roc get pods -l name=onos-cli -o name
+  register: result
+  when: inventory_hostname in groups['master_nodes']
+
+- set_fact:
+    ONOS_CLI_POD: "{{ result.stdout }}"
+  when: inventory_hostname in groups['master_nodes']
+
+- name: find API_SERVICE  
+  shell: kubectl -n aether-roc get --no-headers=true services -l app.kubernetes.io/name=aether-roc-api | awk '{print $1}'
+  register: result
+  when: inventory_hostname in groups['master_nodes']
+
+- set_fact:
+    API_SERVICE: "{{ result.stdout }}"
+  when: inventory_hostname in groups['master_nodes']
+
+- debug:
+    var: "ONOS_CLI_POD"
+
+- debug:
+    var: "API_SERVICE"
+
+- name: remove /tmp/roc-5g-values.yaml
+  file:
+    path: "/tmp/roc-5g-values.yaml"
+    state: absent
+  when: inventory_hostname in groups['master_nodes']
+
+- name: copy roc-5g-models.yaml to /tmp/roc-5g-models.json
+  template:
+    src: roles/5g-roc/templates/roc-5g-models.json
+    dest: "/tmp/roc-5g-models.json"
+  when: inventory_hostname in groups['master_nodes']
+  
+#TODO use ansible kubctl module
+- name: load roc 5g models file
+  shell: "kubectl -n aether-roc exec {{ ONOS_CLI_POD }} -- curl -s -f -L -X \
+          PATCH \"http://{{ API_SERVICE }}:8181/aether-roc-api\" \
+          --header \"Content-Type: application/json\" --data-raw \
+           \"$(cat /tmp/roc-5g-models.json)\" "
+  register: result
+  until: result.stdout.find("command terminated") == -1
+  retries: 5
+  delay: 10
+  when: inventory_hostname in groups['master_nodes']
+
+- debug:
+    var: result
+#   name: Execute a command
+#   kubernetes.core.k8s_exec:
+#     namespace: myproject
+#     pod: zuul-scheduler
+#     command: zuul-scheduler full-reconfigure

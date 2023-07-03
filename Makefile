@@ -25,8 +25,9 @@ amp-pingall:
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
 #### b. Provision k8s with AMP ####
-amp-install: k8s-install roc-install monitor-install
-amp-uninstall: roc-uninstall monitor-uninstall k8s-uninstall
+# k8s-install
+amp-install: k8s-install roc-install 5g-roc-install monitor-install 
+amp-uninstall: monitor-uninstall roc-uninstall k8s-uninstall
 
 #### c. Provision ROC ####
 roc-install: 
@@ -35,6 +36,12 @@ roc-install:
 roc-uninstall:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/roc.yml --tags uninstall \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
+
+### c.1 Provision 5G-ROC ###
+5g-roc-install: # roc-install
+	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/5g-roc.yml --tags install \
+		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
+5g-roc-uninstall: roc-uninstall
 
 #### d. Provision Monitoring ####
 monitor-install: 

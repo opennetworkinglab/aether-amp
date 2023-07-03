@@ -1,0 +1,11 @@
+---
+
+- name: provision 5g-roc
+  hosts: all
+  gather_facts: true
+    
+  vars_files:
+    - "vars/main.yml"
+
+  roles:
+    - 5g-roc

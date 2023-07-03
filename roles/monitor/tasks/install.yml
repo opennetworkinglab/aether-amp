@@ -1,5 +1,42 @@
 ---
 
+#TODO: add in core code
+- name: update cache
+  apt:
+    update_cache: yes
+  become: true
+
+- name: install software-properties-common package
+  apt:
+    name: software-properties-common
+  become: true
+
+- name: install python3 package
+  apt:
+    name: python3
+  become: true
+
+- name: install python3-pip package
+  apt:
+    name: python3-pip
+  become: true
+
+- name: install python3-venv package
+  apt:
+    name: python3-venv
+  become: true
+
+- name: install python-setuptools package
+  apt:
+    name: python-setuptools
+  become: true
+
+- name: install openshift python package
+  pip:
+    name: openshift==0.12.1
+    executable: pip3
+  become: true
+
 - name: add atomix chart repo
   kubernetes.core.helm_repository:
     name: atomix
@@ -24,18 +61,6 @@
     repo_url: "http://charts.rancher.io/"
   when: inventory_hostname in groups['master_nodes']
 
-- name: find {{ amp.data_iface }}'s subnet for RAN
-  shell: ip route | grep {{ amp.data_iface }} | awk '/kernel/ {print $1}' | head -1
-  register: result
-
-when: inventory_hostname in groups['master_nodes']
-  become: true
-
-# TODO: check if interface subnet is valid
-- set_fact:
-    ran_subnet: "{{ result.stdout }}"
-  when: inventory_hostname in groups['master_nodes']
-
 - name: remove /tmp/monitor-values.yaml
   file:
     path: "/tmp/monitor-values.yaml"
@@ -54,8 +79,8 @@ when: inventory_hostname in groups['master_nodes']
     name: rancher-monitoring-crd
     release_namespace: cattle-monitoring-system
     create_namespace: true
-    chart_ref: "{{ amp.monitor-crd.helm.chart_ref }}"
-    chart_version: "{{ amp.monitor-crd.helm.chart_version }}"
+    chart_ref: "{{ amp.monitor_crd.helm.chart_ref }}"
+    chart_version: "{{ amp.monitor_crd.helm.chart_version }}"
     values_files:
       - /tmp/monitor-values.yaml
     wait: true
@@ -76,3 +101,35 @@ when: inventory_hostname in groups['master_nodes']
     force: true
   when: inventory_hostname in groups['master_nodes']
 
+- name: Create a k8s namespace
+  kubernetes.core.k8s:
+    name: omec
+    kind: Namespace
+    state: present
+  when: inventory_hostname in groups['master_nodes']
+  ignore_errors: yes
+
+- name: Create a k8s namespace
+  kubernetes.core.k8s:
+    name: cattle-dashboards
+    kind: Namespace
+    state: present
+  when: inventory_hostname in groups['master_nodes']
+  ignore_errors: yes
+
+- name: Copy  5g-monitoring content in /tmp/5g-monitoring to remote host
+  copy:
+    src:  roles/monitor/templates/5g-monitoring
+    dest: /tmp
+
+- name: apply 5g-monitoring
+  shell: |
+    kubectl apply -k /tmp/5g-monitoring
+  when: inventory_hostname in groups['master_nodes']
+  ignore_errors: yes
+  
+- name: remove /tmp/5g-monitoring
+  file:
+    path: "/tmp/5g-monitoring"
+    state: absent
+  when: inventory_hostname in groups['master_nodes']

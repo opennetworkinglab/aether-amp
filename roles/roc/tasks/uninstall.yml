@@ -1,14 +1,7 @@
 ---
 
-- name: remove aether roc
-  kubernetes.core.helm:
-    name: roc
-    release_namespace: aether-roc
-    state: absent
-    wait: true
-  when: inventory_hostname in groups['master_nodes']
-  ignore_errors: yes
-
+  
+#TODO uninstall local sotre  
 - name: remove rancher chart repo
   kubernetes.core.helm_repository:
     name: rancher
@@ -46,6 +39,21 @@
     name: cord
     state: absent
     repo_url: "https://charts.opencord.org"
+  when: inventory_hostname in groups['master_nodes']
+  ignore_errors: yes
+
+- name: remove aether-roc
+  kubernetes.core.helm:
+    name: aether-roc
+    release_namespace: aether-roc
+    state: absent
+    wait: true
+  when: inventory_hostname in groups['master_nodes']
+  ignore_errors: yes
+  
+- name: delete namespace aether-roc
+  shell: |
+    kubectl delete namespace aether-roc
   when: inventory_hostname in groups['master_nodes']
   ignore_errors: yes
 

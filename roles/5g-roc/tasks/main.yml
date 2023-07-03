@@ -1,0 +1,5 @@
+---
+
+- name: install amp/5g-roc
+  include: roles/5g-roc/tasks/install.yml
+  tags: install
