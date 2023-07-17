@@ -4,37 +4,44 @@
 - name: update cache
   apt:
     update_cache: yes
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install software-properties-common package
   apt:
     name: software-properties-common
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install python3 package
   apt:
     name: python3
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install python3-pip package
   apt:
     name: python3-pip
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install python3-venv package
   apt:
     name: python3-venv
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install python-setuptools package
   apt:
     name: python-setuptools
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install openshift python package
   pip:
     name: openshift==0.12.1
     executable: pip3
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: add atomix chart repo

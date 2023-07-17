@@ -29,62 +29,55 @@
     path: "/tmp/monitor-values.yaml"
     state: absent
   when: inventory_hostname in groups['master_nodes']
-  
-- name: remove openshift python package
-  pip:
-    name: openshift==0.12.1
-    state: absent
-    executable: pip3
-  become: true
+  ignore_errors: yes
 
-- name: remove python-setuptools package
-  apt:
-    name: python-setuptools
-    state: absent
-    purge: yes
-  become: true
+# - name: remove openshift python package
+#   pip:
+#     name: openshift==0.12.1
+#     state: absent
+#     executable: pip3
+#   become: true
+#   ignore_errors: yes
 
-- name: remove python3-venv package
-  apt:
-    name: python3-venv
-    state: absent
-    purge: yes
-  become: true
-
-# - name: remove python3-pip package
+# - name: remove python-setuptools package
 #   apt:
-#     name: python3-pip
+#     name: python-setuptools
 #     state: absent
 #     purge: yes
 #   become: true
+#   ignore_errors: yes
 
-# - name: remove python3 package
+# - name: remove python3-venv package
 #   apt:
-#     name: python3
+#     name: python3-venv
 #     state: absent
 #     purge: yes
 #   become: true
+#   ignore_errors: yes
 
-- name: remove software-properties-common package
-  apt:
-    name: software-properties-common
-    state: absent
-    purge: yes
-  become: true
+# - name: remove software-properties-common package
+#   apt:
+#     name: software-properties-common
+#     state: absent
+#     purge: yes
+#   become: true
+#   ignore_errors: yes
 
-- name: remove make package
-  apt:
-    name: make
-    state: absent
-    purge: yes
-  become: true
+# - name: remove make package
+#   apt:
+#     name: make
+#     state: absent
+#     purge: yes
+#   become: true
+#   ignore_errors: yes
 
-- name: remove sshpass package
-  apt:
-    name: sshpass
-    state: absent
-    purge: yes
-  become: true
+# - name: remove sshpass package
+#   apt:
+#     name: sshpass
+#     state: absent
+#     purge: yes
+#   become: true
+#   ignore_errors: yes
 
 - name: update cache
   apt:

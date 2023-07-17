@@ -1,7 +1,7 @@
 ---
 
 - name: provision 5g-roc
-  hosts: all
+  hosts: master_nodes
   gather_facts: true
     
   vars_files:
