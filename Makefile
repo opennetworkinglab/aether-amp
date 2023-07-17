@@ -2,20 +2,13 @@
 
 export ROOT_DIR ?= $(PWD)
 export AMP_ROOT_DIR ?= $(ROOT_DIR)
-export K8S_ROOT_DIR ?= $(AMP_ROOT_DIR)/deps/k8s
 
 export ANSIBLE_NAME ?= ansible-amp
-export ANSIBLE_CONFIG ?= $(K8S_ROOT_DIR)/ansible.cfg
 export HOSTS_INI_FILE ?= $(AMP_ROOT_DIR)/hosts.ini
 
 export EXTRA_VARS ?= "@$(AMP_ROOT_DIR)/vars/main.yml"
 
-#### Provisioning k8s ####
-
-include $(K8S_ROOT_DIR)/Makefile
-
 #### a. Debugging ####
-
 amp-debug:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/debug.yml \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
@@ -26,8 +19,8 @@ amp-pingall:
 
 #### b. Provision k8s with AMP ####
 # k8s-install
-amp-install: k8s-install roc-install 5g-roc-install monitor-install 
-amp-uninstall: monitor-uninstall roc-uninstall k8s-uninstall
+amp-install: roc-install 5g-roc-install monitor-install 
+amp-uninstall: monitor-uninstall roc-uninstall
 
 #### c. Provision ROC ####
 roc-install: 
