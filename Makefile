@@ -34,7 +34,11 @@ roc-uninstall:
 5g-roc-install: # roc-install
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/5g-roc.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
-5g-roc-uninstall: roc-uninstall
+
+### c.2 Provision 4G-ROC ###
+4g-roc-install: # roc-install
+	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/4g-roc.yml --tags install \
+		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
 #### d. Provision Monitoring ####
 monitor-install: 

@@ -6,7 +6,6 @@ global:
   atomix:
     storage:
       controller: "atomix-controller.kube-system:5679"
-      # controller: "atomix-controller.aether-roc:5679"
     store:
       consensus:
         enabled: true
