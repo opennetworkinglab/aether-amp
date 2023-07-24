@@ -18,13 +18,13 @@
     API_SERVICE: "{{ result.stdout }}"
   when: inventory_hostname in groups['master_nodes']
 
-# - debug:
-    # var: "ONOS_CLI_POD"
-  # when: inventory_hostname in groups['master_nodes']
+- debug:
+    var: "ONOS_CLI_POD"
+  when: inventory_hostname in groups['master_nodes']
 
-# - debug:
-    # var: "API_SERVICE"
-  # when: inventory_hostname in groups['master_nodes']
+- debug:
+    var: "API_SERVICE"
+  when: inventory_hostname in groups['master_nodes']
 
 - name: remove /tmp/roc-4g-values.yaml
   file:
@@ -52,7 +52,7 @@
 
 - debug:
     var: result
-    when: inventory_hostname in groups['master_nodes']
+  when: inventory_hostname in groups['master_nodes']
 #   name: Execute a command
 #   kubernetes.core.k8s_exec:
 #     namespace: myproject
