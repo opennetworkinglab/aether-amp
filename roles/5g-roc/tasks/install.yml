@@ -20,11 +20,11 @@
 
 - debug:
     var: "ONOS_CLI_POD"
-    when: inventory_hostname in groups['master_nodes']
+  when: inventory_hostname in groups['master_nodes']
 
 - debug:
     var: "API_SERVICE"
-    when: inventory_hostname in groups['master_nodes']
+  when: inventory_hostname in groups['master_nodes']
 
 - name: remove /tmp/roc-5g-values.yaml
   file:
