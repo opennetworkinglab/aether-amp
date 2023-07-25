@@ -1,0 +1,5 @@
+---
+
+- name: install amp/4g-monitor
+  include: roles/4g-monitor/tasks/install.yml
+  tags: install

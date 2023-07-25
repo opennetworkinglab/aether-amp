@@ -1,0 +1,35 @@
+---
+
+- name: Create a k8s namespace
+  kubernetes.core.k8s:
+    name: omec
+    kind: Namespace
+    state: present
+  when: inventory_hostname in groups['master_nodes']
+  ignore_errors: yes
+
+- name: Create a k8s namespace
+  kubernetes.core.k8s:
+    name: cattle-dashboards
+    kind: Namespace
+    state: present
+  when: inventory_hostname in groups['master_nodes']
+  ignore_errors: yes
+
+- name: Copy  4g-monitoring content in /tmp/4g-monitoring to remote host
+  copy:
+    src:  roles/4g-monitor/templates/4g-monitoring
+    dest: /tmp
+  when: inventory_hostname in groups['master_nodes']
+  
+- name: apply 4g-monitoring
+  shell: |
+    kubectl apply -k /tmp/4g-monitoring
+  when: inventory_hostname in groups['master_nodes']
+  ignore_errors: yes
+  
+- name: remove /tmp/4g-monitoring
+  file:
+    path: "/tmp/4g-monitoring"
+    state: absent
+  when: inventory_hostname in groups['master_nodes']

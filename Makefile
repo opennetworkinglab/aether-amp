@@ -19,8 +19,8 @@ amp-pingall:
 
 #### b. Provision k8s with AMP ####
 # k8s-install
-amp-5gc-install: roc-install 5g-roc-install monitor-install 
-amp-4gc-install: roc-install 4g-roc-install monitor-install 
+amp-5gc-install: roc-install 5g-roc-install monitor-install 5g-monitor-install
+amp-4gc-install: roc-install 4g-roc-install monitor-install 4g-monitor-install
 amp-uninstall: monitor-uninstall roc-uninstall
 
 #### c. Provision ROC ####
@@ -47,4 +47,14 @@ monitor-install:
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 monitor-uninstall:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/monitor.yml --tags uninstall \
+		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
+
+#### d.1 Provision 5G-Monitoring ####
+5g-monitor-install: 
+	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/5g-monitor.yml --tags install \
+		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
+
+#### d.2 Provision 5G-Monitoring ####
+4g-monitor-install: 
+	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/4g-monitor.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
