@@ -19,8 +19,8 @@ amp-pingall:
 
 #### b. Provision k8s with AMP ####
 # k8s-install
-amp-5gc-install: roc-install 5g-roc-install monitor-install 5g-monitor-install
-amp-4gc-install: roc-install 4g-roc-install monitor-install 4g-monitor-install
+amp-5g-install: roc-install 5g-roc-install monitor-install 5g-monitor-install
+amp-4g-install: roc-install 4g-roc-install monitor-install 4g-monitor-install
 amp-uninstall: monitor-uninstall roc-uninstall
 
 #### c. Provision ROC ####
