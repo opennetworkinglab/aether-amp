@@ -4,37 +4,44 @@
 - name: update cache
   apt:
     update_cache: yes
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install software-properties-common package
   apt:
     name: software-properties-common
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install python3 package
   apt:
     name: python3
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install python3-pip package
   apt:
     name: python3-pip
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install python3-venv package
   apt:
     name: python3-venv
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install python-setuptools package
   apt:
     name: python-setuptools
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: install openshift python package
   pip:
     name: openshift==0.12.1
     executable: pip3
+  when: inventory_hostname in groups['master_nodes']
   become: true
 
 - name: add atomix chart repo
@@ -99,38 +106,4 @@
       - /tmp/monitor-values.yaml
     wait: true
     force: true
-  when: inventory_hostname in groups['master_nodes']
-
-- name: Create a k8s namespace
-  kubernetes.core.k8s:
-    name: omec
-    kind: Namespace
-    state: present
-  when: inventory_hostname in groups['master_nodes']
-  ignore_errors: yes
-
-- name: Create a k8s namespace
-  kubernetes.core.k8s:
-    name: cattle-dashboards
-    kind: Namespace
-    state: present
-  when: inventory_hostname in groups['master_nodes']
-  ignore_errors: yes
-
-- name: Copy  5g-monitoring content in /tmp/5g-monitoring to remote host
-  copy:
-    src:  roles/monitor/templates/5g-monitoring
-    dest: /tmp
-  when: inventory_hostname in groups['master_nodes']
-  
-- name: apply 5g-monitoring
-  shell: |
-    kubectl apply -k /tmp/5g-monitoring
-  when: inventory_hostname in groups['master_nodes']
-  ignore_errors: yes
-  
-- name: remove /tmp/5g-monitoring
-  file:
-    path: "/tmp/5g-monitoring"
-    state: absent
   when: inventory_hostname in groups['master_nodes']

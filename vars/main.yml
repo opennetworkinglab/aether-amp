@@ -1,12 +1,4 @@
-k8s:
-  rke2:
-    config:
-      params_file:
-        master: "templates/rke2-master-params.yaml"
-        worker: "templates/rke2-worker-params.yaml"
-
 amp:
-  data_iface: ens18
 
   aether_roc:
     helm:

@@ -1,2 +1,0 @@
-token: {{ k8s.rke2.config.token }}
-node-name: {{ inventory_hostname }}

@@ -2,20 +2,13 @@
 
 export ROOT_DIR ?= $(PWD)
 export AMP_ROOT_DIR ?= $(ROOT_DIR)
-export K8S_ROOT_DIR ?= $(AMP_ROOT_DIR)/deps/k8s
 
 export ANSIBLE_NAME ?= ansible-amp
-export ANSIBLE_CONFIG ?= $(K8S_ROOT_DIR)/ansible.cfg
 export HOSTS_INI_FILE ?= $(AMP_ROOT_DIR)/hosts.ini
 
 export EXTRA_VARS ?= "@$(AMP_ROOT_DIR)/vars/main.yml"
 
-#### Provisioning k8s ####
-
-include $(K8S_ROOT_DIR)/Makefile
-
 #### a. Debugging ####
-
 amp-debug:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/debug.yml \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
@@ -26,8 +19,9 @@ amp-pingall:
 
 #### b. Provision k8s with AMP ####
 # k8s-install
-amp-install: k8s-install roc-install 5g-roc-install monitor-install 
-amp-uninstall: monitor-uninstall roc-uninstall k8s-uninstall
+amp-5gc-install: roc-install 5g-roc-install monitor-install 5g-monitor-install
+amp-4gc-install: roc-install 4g-roc-install monitor-install 4g-monitor-install
+amp-uninstall: monitor-uninstall roc-uninstall
 
 #### c. Provision ROC ####
 roc-install: 
@@ -41,7 +35,11 @@ roc-uninstall:
 5g-roc-install: # roc-install
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/5g-roc.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
-5g-roc-uninstall: roc-uninstall
+
+### c.2 Provision 4G-ROC ###
+4g-roc-install: # roc-install
+	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/4g-roc.yml --tags install \
+		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
 #### d. Provision Monitoring ####
 monitor-install: 
@@ -49,4 +47,14 @@ monitor-install:
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 monitor-uninstall:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/monitor.yml --tags uninstall \
+		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
+
+#### d.1 Provision 5G-Monitoring ####
+5g-monitor-install: 
+	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/5g-monitor.yml --tags install \
+		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
+
+#### d.2 Provision 5G-Monitoring ####
+4g-monitor-install: 
+	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/4g-monitor.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)

@@ -26,24 +26,24 @@
     var: "API_SERVICE"
   when: inventory_hostname in groups['master_nodes']
 
-- name: remove /tmp/roc-5g-values.yaml
+- name: remove /tmp/roc-4g-values.yaml
   file:
-    path: "/tmp/roc-5g-values.yaml"
+    path: "/tmp/roc-4g-values.yaml"
     state: absent
   when: inventory_hostname in groups['master_nodes']
 
-- name: copy roc-5g-models.yaml to /tmp/roc-5g-models.json
+- name: copy roc-4g-models.yaml to /tmp/roc-4g-models.json
   template:
-    src: roles/5g-roc/templates/roc-5g-models.json
-    dest: "/tmp/roc-5g-models.json"
+    src: roles/4g-roc/templates/roc-4g-models.json
+    dest: "/tmp/roc-4g-models.json"
   when: inventory_hostname in groups['master_nodes']
   
 #TODO use ansible kubctl module
-- name: load roc 5g models file
+- name: load roc 4g models file
   shell: "kubectl -n aether-roc exec {{ ONOS_CLI_POD }} -- curl -s -f -L -X \
           PATCH \"http://{{ API_SERVICE }}:8181/aether-roc-api\" \
           --header \"Content-Type: application/json\" --data-raw \
-           \"$(cat /tmp/roc-5g-models.json)\" "
+           \"$(cat /tmp/roc-4g-models.json)\" "
   register: result
   until: result.stdout.find("command terminated") == -1
   retries: 5
@@ -52,7 +52,7 @@
 
 - debug:
     var: result
-    when: inventory_hostname in groups['master_nodes']
+  when: inventory_hostname in groups['master_nodes']
 #   name: Execute a command
 #   kubernetes.core.k8s_exec:
 #     namespace: myproject
