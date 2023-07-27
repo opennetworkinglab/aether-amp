@@ -18,7 +18,7 @@
 
 - name: Copy monitoring content in /tmp/monitoring to remote host
   copy:
-    src:  "{{ amp.monitor_dashboard }}/"
+    src:  "{{ ROOT_DIR }}/{{ amp.monitor_dashboard }}/"
     dest: /tmp/monitoring/
   when: inventory_hostname in groups['master_nodes']
   
