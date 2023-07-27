@@ -7,10 +7,10 @@
                 "display-name": "AiaB site",
                 "site-id": "aiab-site",
                 "imsi-definition": {
-                    "mcc": "208",
-                    "mnc": "93",
+                    "mcc": "315",
+                    "mnc": "010",
                     "enterprise": 1,
-                    "format": "CCCNNEESSSSSSSS"
+                    "format": "CCCNNNEESSSSSSS"
                 },
                 "connectivity-service": {
                     "core-4g": {
@@ -27,18 +27,28 @@
                         "device-id": "aiab-ue-2",
                         "display-name": "UE 2",
                         "sim-card": "aiab-sim-2"
+                    },
+                    {
+                        "device-id": "aiab-ue-3",
+                        "display-name": "UE 3",
+                        "sim-card": "aiab-sim-3"
                     }
                 ],
                 "sim-card": [
                     {
                         "sim-id": "aiab-sim-1",
                         "display-name": "UE 1 Sim",
-                        "imsi": "208930100007487"
+                        "imsi": "315010999912301"
                     },
                     {
                         "sim-id": "aiab-sim-2",
                         "display-name": "UE 2 Sim",
-                        "imsi": "208930100007488"
+                        "imsi": "315010999912302"
+                    },
+                    {
+                        "sim-id": "aiab-sim-3",
+                        "display-name": "UE 3 Sim",
+                        "imsi": "315010999912303"
                     }
                 ],
                 "device-group": [
@@ -52,6 +62,10 @@
                             },
                             {
                                 "device-id": "aiab-ue-2",
+                                "enable": true
+                            },
+                            {
+                                "device-id": "aiab-ue-3",
                                 "enable": true
                             }
                         ],
