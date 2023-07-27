@@ -34,7 +34,7 @@
 
 - name: Copy models file to /tmp/roc-models.json
   template:
-    src: "{{ amp.roc_models }}"
+    src: "{{ ROOT_DIR }}/{{ amp.roc_models }}"
     dest: "/tmp/roc-models.json"
   when: inventory_hostname in groups['master_nodes']
   
@@ -52,7 +52,7 @@
 
 - debug:
     var: result
-    when: inventory_hostname in groups['master_nodes']
+  when: inventory_hostname in groups['master_nodes']
 #   name: Execute a command
 #   kubernetes.core.k8s_exec:
 #     namespace: myproject
