@@ -1,4 +1,6 @@
 amp:
+  roc_models: "roles/roc-load/templates/roc-5g-models.json"
+  monitor_dashboard: "roles/monitor-load/templates/5g-monitoring"
 
   aether_roc:
     helm:

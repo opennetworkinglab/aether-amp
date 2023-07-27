@@ -1,5 +1,0 @@
----
-
-- name: install amp/4g-roc
-  include: roles/4g-roc/tasks/install.yml
-  tags: install

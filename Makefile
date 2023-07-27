@@ -19,8 +19,7 @@ amp-pingall:
 
 #### b. Provision k8s with AMP ####
 # k8s-install
-amp-5g-install: roc-install 5g-roc-install monitor-install 5g-monitor-install
-amp-4g-install: roc-install 4g-roc-install monitor-install 4g-monitor-install
+amp-install: roc-install roc-load monitor-install monitor-load
 amp-uninstall: monitor-uninstall roc-uninstall
 
 #### c. Provision ROC ####
@@ -31,14 +30,9 @@ roc-uninstall:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/roc.yml --tags uninstall \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
-### c.1 Provision 5G-ROC ###
-5g-roc-install: # roc-install
-	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/5g-roc.yml --tags install \
-		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
-
-### c.2 Provision 4G-ROC ###
-4g-roc-install: # roc-install
-	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/4g-roc.yml --tags install \
+### c.1 Load ROC Models ###
+roc-load: # roc-install
+	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/roc-load.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
 #### d. Provision Monitoring ####
@@ -49,12 +43,8 @@ monitor-uninstall:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/monitor.yml --tags uninstall \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
-#### d.1 Provision 5G-Monitoring ####
-5g-monitor-install: 
-	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/5g-monitor.yml --tags install \
+#### d.1 Load Monitoring Dashboards ####
+monitor-load: 
+	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/monitor-load.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
-#### d.2 Provision 5G-Monitoring ####
-4g-monitor-install: 
-	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/4g-monitor.yml --tags install \
-		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)

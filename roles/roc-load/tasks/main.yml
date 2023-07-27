@@ -1,0 +1,5 @@
+---
+
+- name: install amp/roc-load
+  include: roles/roc-load/tasks/install.yml
+  tags: install

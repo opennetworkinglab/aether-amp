@@ -1,6 +1,6 @@
 ---
 
-- name: provision 5g-roc
+- name: load monitor dashboard
   hosts: master_nodes
   gather_facts: true
     
@@ -8,4 +8,4 @@
     - "vars/main.yml"
 
   roles:
-    - 5g-roc
+    - monitor-load

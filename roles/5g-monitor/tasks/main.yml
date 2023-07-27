@@ -1,5 +1,0 @@
----
-
-- name: install amp/5g-monitor
-  include: roles/5g-monitor/tasks/install.yml
-  tags: install

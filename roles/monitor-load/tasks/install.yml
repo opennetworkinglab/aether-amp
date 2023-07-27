@@ -16,20 +16,21 @@
   when: inventory_hostname in groups['master_nodes']
   ignore_errors: yes
 
-- name: Copy  4g-monitoring content in /tmp/4g-monitoring to remote host
+- name: Copy monitoring content in /tmp/monitoring to remote host
   copy:
-    src:  roles/4g-monitor/templates/4g-monitoring
-    dest: /tmp
+    src:  "{{ amp.monitor_dashboard }}/"
+    dest: /tmp/monitoring/
   when: inventory_hostname in groups['master_nodes']
   
-- name: apply 4g-monitoring
+- name: apply monitoring dashboard
   shell: |
-    kubectl apply -k /tmp/4g-monitoring
+    kubectl apply -k /tmp/monitoring
   when: inventory_hostname in groups['master_nodes']
   ignore_errors: yes
   
-- name: remove /tmp/4g-monitoring
+- name: remove /tmp/monitoring
   file:
-    path: "/tmp/4g-monitoring"
+    path: "/tmp/monitoring"
     state: absent
   when: inventory_hostname in groups['master_nodes']
+  
