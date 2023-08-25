@@ -1,5 +1,23 @@
 ---
 
+- name: set fs.inotify.max_user_watches to 524288
+  ansible.posix.sysctl:
+    name: fs.inotify.max_user_watches
+    value: '524288'
+    sysctl_set: true
+    reload: true
+  when: inventory_hostname in groups['master_nodes']
+  become: true
+
+- name: set fs.inotify.max_user_instances to 512
+  ansible.posix.sysctl:
+    name: fs.inotify.max_user_instances
+    value: '512'
+    sysctl_set: true
+    reload: true
+  when: inventory_hostname in groups['master_nodes']
+  become: true
+
 - name: add atomix chart repo
   kubernetes.core.helm_repository:
     name: atomix
