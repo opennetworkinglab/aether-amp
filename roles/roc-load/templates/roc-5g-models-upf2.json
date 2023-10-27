@@ -11,6 +11,26 @@
                         "sim-id": "sim-20",
                         "display-name": "SIM 20",
                         "imsi": "208930100007505"
+                    },
+                    {
+                        "sim-id": "sim-21",
+                        "display-name": "SIM 21",
+                        "imsi": "208930100007506"
+                    },
+                    {
+                        "sim-id": "sim-22",
+                        "display-name": "SIM 22",
+                        "imsi": "208930100007507"
+                    },
+                    {
+                        "sim-id": "sim-23",
+                        "display-name": "SIM 23",
+                        "imsi": "208930100007508"
+                    },
+                    {
+                        "sim-id": "sim-24",
+                        "display-name": "SIM 24",
+                        "imsi": "208930100007509"
                     }
                 ],
                 "device": [
@@ -18,6 +38,26 @@
                         "device-id": "ue-20",
                         "display-name": "UE 20",
                         "sim-card": "sim-20"
+                    },
+                    {
+                        "device-id": "ue-21",
+                        "display-name": "UE 21",
+                        "sim-card": "sim-21"
+                    },
+                    {
+                        "device-id": "ue-22",
+                        "display-name": "UE 22",
+                        "sim-card": "sim-22"
+                    },
+                    {
+                        "device-id": "ue-23",
+                        "display-name": "UE 23",
+                        "sim-card": "sim-23"
+                    },
+                    {
+                        "device-id": "ue-24",
+                        "display-name": "UE 24",
+                        "sim-card": "sim-24"
                     }
                 ],
                 "ip-domain": [
@@ -38,6 +78,22 @@
                         "device": [
                             {
                                 "device-id": "ue-20",
+                                "enable": true
+                            },
+                            {
+                                "device-id": "ue-21",
+                                "enable": true
+                            },
+                            {
+                                "device-id": "ue-22",
+                                "enable": true
+                            },
+                            {
+                                "device-id": "ue-23",
+                                "enable": true
+                            },
+                            {
+                                "device-id": "ue-24",
                                 "enable": true
                             }
                         ],
