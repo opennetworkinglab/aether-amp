@@ -599,7 +599,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(8 * irate(upf_session_tx_bytes{namespace=\"omec\",pdr=~\".*[02468]\"}[1m])) by (ue_ip)",
+          "expr": "sum(8 * irate(upf_session_tx_bytes{namespace=\"omec\",pdr=~\".*[02468]\"}[2m])) by (ue_ip)",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -621,7 +621,7 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
