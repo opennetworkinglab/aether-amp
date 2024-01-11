@@ -5,6 +5,7 @@
 resources:
   - ./metricfunc-monitor.yaml
   - ./upf-monitor.yaml
+  - ./smf-monitor.yaml
 
 configMapGenerator:
   - name: grafana-ops-dashboards

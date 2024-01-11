@@ -80,7 +80,7 @@
           },
           "editorMode": "builder",
           "exemplar": true,
-          "expr": "smf_pdu_sessions",
+          "expr": "smf_pdu_sessions{service=\"metricfunc\"}",
           "hide": false,
           "instant": true,
           "interval": "",
@@ -307,7 +307,20 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "imsi"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 214
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 6,
@@ -317,7 +330,9 @@
       },
       "id": 6,
       "options": {
-        "showHeader": true
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "7.5.11",
       "targets": [
@@ -336,6 +351,16 @@
           "legendFormat": "",
           "range": true,
           "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum without (id) (label_replace(smf_pdu_session_profile, \"imsi\", \"$1\", \"id\", \"(.*)\"))",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
         }
       ],
       "timeFrom": null,
@@ -343,18 +368,55 @@
       "title": "5G Core Subscribers",
       "transformations": [
         {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "imsi"
+          }
+        },
+        {
           "id": "organize",
           "options": {
             "excludeByName": {
               "Time": true,
-              "Value": true
+              "Time 1": true,
+              "Time 2": true,
+              "Value #A": true,
+              "Value #B": true,
+              "endpoint": true,
+              "enterprise": true,
+              "instance": true,
+              "job": true,
+              "namespace": true,
+              "pod": true,
+              "service": true,
+              "state 1": false,
+              "state 2": true,
+              "upf": true
             },
-            "indexByName": {},
+            "indexByName": {
+              "Time 1": 1,
+              "Time 2": 4,
+              "Value #A": 3,
+              "Value #B": 15,
+              "endpoint": 5,
+              "enterprise": 6,
+              "imsi": 0,
+              "instance": 7,
+              "ip": 8,
+              "job": 9,
+              "namespace": 10,
+              "pod": 11,
+              "service": 12,
+              "slice": 2,
+              "state 1": 16,
+              "state 2": 13,
+              "upf": 14
+            },
             "renameByName": {
-              "Value": "Status",
               "imsi": "IMSI",
+              "ip": "IP Address",
               "slice": "Slice",
-              "state": "State"
+              "state 1": "State"
             }
           }
         }
