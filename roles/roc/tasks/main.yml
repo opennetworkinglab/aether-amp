@@ -1,9 +1,9 @@
 ---
 
 - name: install amp/roc
-  include: roles/roc/tasks/install.yml
+  import_tasks: roles/roc/tasks/install.yml
   tags: install
 
 - name: uninstall amp/roc
-  include: roles/roc/tasks/uninstall.yml
+  import_tasks: roles/roc/tasks/uninstall.yml
   tags: uninstall
