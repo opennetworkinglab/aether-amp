@@ -33,4 +33,3 @@
     path: "/tmp/monitoring"
     state: absent
   when: inventory_hostname in groups['master_nodes']
-
