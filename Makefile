@@ -23,7 +23,7 @@ amp-install: roc-install roc-load monitor-install monitor-load
 amp-uninstall: monitor-uninstall roc-uninstall
 
 #### c. Provision ROC ####
-roc-install: 
+roc-install:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/roc.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 roc-uninstall:
@@ -36,7 +36,7 @@ roc-load: # roc-install
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
 #### d. Provision Monitoring ####
-monitor-install: 
+monitor-install:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/monitor.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 monitor-uninstall:
@@ -44,7 +44,6 @@ monitor-uninstall:
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
 
 #### d.1 Load Monitoring Dashboards ####
-monitor-load: 
+monitor-load:
 	ansible-playbook -i $(HOSTS_INI_FILE) $(AMP_ROOT_DIR)/monitor-load.yml --tags install \
 		--extra-vars "ROOT_DIR=$(ROOT_DIR)" --extra-vars $(EXTRA_VARS)
-

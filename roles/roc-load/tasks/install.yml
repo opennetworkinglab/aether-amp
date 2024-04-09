@@ -1,6 +1,6 @@
 ---
 
-- name: find ONOS_CLI_POD  
+- name: find ONOS_CLI_POD
   shell: kubectl -n aether-roc get pods -l name=onos-cli -o name
   register: result
   when: inventory_hostname in groups['master_nodes']
@@ -9,7 +9,7 @@
     ONOS_CLI_POD: "{{ result.stdout }}"
   when: inventory_hostname in groups['master_nodes']
 
-- name: find API_SERVICE  
+- name: find API_SERVICE
   shell: kubectl -n aether-roc get --no-headers=true services -l app.kubernetes.io/name=aether-roc-api | awk '{print $1}'
   register: result
   when: inventory_hostname in groups['master_nodes']
@@ -37,7 +37,7 @@
     src: "{{ ROOT_DIR }}/{{ amp.roc_models }}"
     dest: "/tmp/roc-models.json"
   when: inventory_hostname in groups['master_nodes']
-  
+
 #TODO use ansible kubctl module
 - name: load roc models file
   shell: "kubectl -n aether-roc exec {{ ONOS_CLI_POD }} -- curl -s -f -L -X \

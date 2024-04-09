@@ -63,7 +63,7 @@
   kubernetes.core.helm:
     update_repo_cache: true
     name: onos-operator
-    release_namespace: kube-system #aether-roc 
+    release_namespace: kube-system #aether-roc
     create_namespace: true
     chart_ref: "{{ amp.onosproject.helm.chart_ref }}"
     chart_version: "{{ amp.onosproject.helm.chart_version }}"
