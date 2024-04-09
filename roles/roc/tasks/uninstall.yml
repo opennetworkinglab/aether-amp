@@ -1,7 +1,7 @@
 ---
 
-  
-#TODO uninstall local sotre  
+
+#TODO uninstall local sotre
 - name: remove rancher chart repo
   kubernetes.core.helm_repository:
     name: rancher
@@ -50,7 +50,7 @@
     wait: true
   when: inventory_hostname in groups['master_nodes']
   ignore_errors: yes
-  
+
 - name: delete namespace aether-roc
   shell: |
     kubectl delete namespace aether-roc

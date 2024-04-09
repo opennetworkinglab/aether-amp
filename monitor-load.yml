@@ -3,7 +3,7 @@
 - name: load monitor dashboard
   hosts: master_nodes
   gather_facts: true
-    
+
   vars_files:
     - "vars/main.yml"
 

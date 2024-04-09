@@ -1,6 +1,6 @@
 amp:
   data_iface: ens18
-  
+
   aether_roc:
     helm:
       chart_ref: aether/aether-roc-umbrella

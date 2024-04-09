@@ -15,7 +15,7 @@ To install the amp, follow these steps:
 2. Install ROC
    - Specify helm charts for `atomix, onosproject, aether_roc`
    - Run `roc-install`.
-   - Run `make 5g-roc-install` for 5G or `make 4g-roc-install` for 5G 
+   - Run `make 5g-roc-install` for 5G or `make 4g-roc-install` for 5G
 3. Install Monitering
    - Specify helm charts for `monitor, monitor-crd`
    - Run `monitor-install`.

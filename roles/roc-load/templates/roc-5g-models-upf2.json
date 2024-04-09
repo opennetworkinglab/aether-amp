@@ -106,7 +106,7 @@
                     }
                 ],
                 "slice": [
-                    {   
+                    {
                         "default-behavior": "ALLOW-ALL",
                         "display-name": "Aether Slice 2",
                         "device-group": [
@@ -127,7 +127,7 @@
                         },
                         "priority-traffic-rule": []
                     }
-                ],                              
+                ],
                 "upf": [
                     {
                         "address": "upf.omec-upf-1",
