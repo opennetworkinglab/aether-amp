@@ -38,12 +38,12 @@
     dest: "/tmp/roc-models.json"
   when: inventory_hostname in groups['master_nodes']
 
-#TODO use ansible kubctl module
+#TODO use ansible kubectl module
 - name: load roc models file
-  shell: "kubectl -n aether-roc exec {{ ONOS_CLI_POD }} -- curl -s -f -L -X \
-          PATCH \"http://{{ API_SERVICE }}:8181/aether-roc-api\" \
-          --header \"Content-Type: application/json\" --data-raw \
-           \"$(cat /tmp/roc-models.json)\" "
+  shell: 'kubectl -n aether-roc exec {{ ONOS_CLI_POD }} -- curl -s -f -L -X \
+          PATCH "http://{{ API_SERVICE }}:8181/aether-roc-api" \
+          --header "Content-Type: application/json" --data-raw \
+          "$(cat /tmp/roc-models.json)"'
   register: result
   until: result.stdout.find("command terminated") == -1
   retries: 5
