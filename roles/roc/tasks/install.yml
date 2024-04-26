@@ -39,6 +39,11 @@
     dest: "/tmp/roc-values.yaml"
   when: inventory_hostname in groups['master_nodes']
 
+- name: update roc helm dependencies
+  shell: |
+    helm dep up "{{ amp.aether_roc.helm.chart_ref }}"
+  when: inventory_hostname in groups['master_nodes'] and amp.aether_roc.helm.local_charts
+
 - name: deploy atomix-runtime from {{ amp.atomix.helm.chart_ref }}
   kubernetes.core.helm:
     update_repo_cache: true
