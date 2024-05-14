@@ -99,8 +99,8 @@
                         ],
                         "ip-domain": "ip-pool-1",
                         "mbr": {
-                            "uplink": 1000000,
-                            "downlink": 1000000
+                            "uplink": 500000000,
+                            "downlink": 500000000
                         },
                         "traffic-class": "class-1"
                     }
@@ -108,7 +108,7 @@
                 "ip-domain": [
                     {
                         "admin-status": "ENABLE",
-                        "display-name": "IP pool",
+                        "display-name": "IP Pool",
                         "dnn": "internet",
                         "dns-primary": "8.8.8.8",
                         "ip-domain-id": "ip-pool-1",
@@ -151,8 +151,8 @@
                         "sst": "1",
                         "upf": "upf-1",
                         "mbr": {
-                            "uplink": 10000000,
-                            "downlink": 5000000
+                            "uplink": 500000000,
+                            "downlink": 500000000
                         },
                         "priority-traffic-rule": []
                     }

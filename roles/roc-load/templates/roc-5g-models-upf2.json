@@ -99,8 +99,8 @@
                         ],
                         "ip-domain": "ip-pool-2",
                         "mbr": {
-                            "uplink": 1000000,
-                            "downlink": 1000000
+                            "uplink": 500000000,
+                            "downlink": 500000000
                         },
                         "traffic-class": "class-1"
                     }
@@ -122,8 +122,8 @@
                         "sst": "2",
                         "upf": "upf-2",
                         "mbr": {
-                            "uplink": 10000000,
-                            "downlink": 5000000
+                            "uplink": 500000000,
+                            "downlink": 500000000
                         },
                         "priority-traffic-rule": []
                     }
