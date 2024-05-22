@@ -75,7 +75,7 @@
 - name: deploy aether-roc-umbrella from {{ amp.aether_roc.helm.chart_ref }}
   kubernetes.core.helm:
     update_repo_cache: true
-    name: aether-roc-umbrella
+    name: roc
     release_namespace: aether-roc
     create_namespace: true
     chart_ref: "{{ amp.aether_roc.helm.chart_ref }}"
