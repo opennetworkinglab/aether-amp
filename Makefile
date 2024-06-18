@@ -3,6 +3,7 @@
 export ROOT_DIR ?= $(PWD)
 export AMP_ROOT_DIR ?= $(ROOT_DIR)
 
+
 export ANSIBLE_NAME ?= ansible-amp
 export HOSTS_INI_FILE ?= $(AMP_ROOT_DIR)/hosts.ini
 
