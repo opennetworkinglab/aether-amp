@@ -69,29 +69,48 @@
   when: inventory_hostname in groups['master_nodes']
 
 - name: deploy aether monitor-crd
-  kubernetes.core.helm:
-    update_repo_cache: true
-    name: rancher-monitoring-crd
-    release_namespace: cattle-monitoring-system
-    create_namespace: true
-    chart_ref: "{{ amp.monitor_crd.helm.chart_ref }}"
-    chart_version: "{{ amp.monitor_crd.helm.chart_version }}"
-    values_files:
-      - /tmp/monitor-values.yaml
-    wait: true
-    force: true
-  when: inventory_hostname in groups['master_nodes']
+  block:
+    - name: deploy aether monitor-crd
+      kubernetes.core.helm:
+        update_repo_cache: true
+        name: rancher-monitoring-crd
+        release_namespace: cattle-monitoring-system
+        create_namespace: true
+        chart_ref: "{{ amp.monitor_crd.helm.chart_ref }}"
+        chart_version: "{{ amp.monitor_crd.helm.chart_version }}"
+        values_files:
+          - /tmp/monitor-values.yaml
+        wait: true
+        force: true
+      when: inventory_hostname in groups['master_nodes']
+      until: result is succeeded
+      retries: 5
+      delay: 10
+      register: result
+  rescue:
+    - debug:
+        msg: "Failed to deploy aether monitor-crd after multiple attempts."
 
 - name: deploy aether monitor
-  kubernetes.core.helm:
-    update_repo_cache: true
-    name: rancher-monitoring
-    release_namespace: cattle-monitoring-system
-    create_namespace: true
-    chart_ref: "{{ amp.monitor.helm.chart_ref }}"
-    chart_version: "{{ amp.monitor.helm.chart_version }}"
-    values_files:
-      - /tmp/monitor-values.yaml
-    wait: true
-    force: true
-  when: inventory_hostname in groups['master_nodes']
+  block:
+    - name: deploy aether monitor
+      kubernetes.core.helm:
+        update_repo_cache: true
+        name: rancher-monitoring
+        release_namespace: cattle-monitoring-system
+        create_namespace: true
+        chart_ref: "{{ amp.monitor.helm.chart_ref }}"
+        chart_version: "{{ amp.monitor.helm.chart_version }}"
+        values_files:
+          - /tmp/monitor-values.yaml
+        wait: true
+        force: true
+      when: inventory_hostname in groups['master_nodes']
+      until: result is succeeded
+      retries: 5
+      delay: 10
+      register: result
+  rescue:
+    - debug:
+        msg: "Failed to deploy aether monitor after multiple attempts."
+
