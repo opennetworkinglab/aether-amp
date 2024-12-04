@@ -2,7 +2,7 @@
 
 - name: Create a k8s namespace
   kubernetes.core.k8s:
-    name: omec
+    name: aether-5gc
     kind: Namespace
     state: present
   when: inventory_hostname in groups['master_nodes']

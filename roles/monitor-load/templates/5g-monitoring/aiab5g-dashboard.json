@@ -579,7 +579,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(8 * irate(upf_session_tx_bytes{namespace=\"omec\",pdr=~\".*[13579]\"}[2m])) by (ue_ip)",
+          "expr": "sum(8 * irate(upf_session_tx_bytes{namespace=\"aether-5gc\",pdr=~\".*[13579]\"}[2m])) by (ue_ip)",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -661,7 +661,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(8 * irate(upf_session_tx_bytes{namespace=\"omec\",pdr=~\".*[02468]\"}[2m])) by (ue_ip)",
+          "expr": "sum(8 * irate(upf_session_tx_bytes{namespace=\"aether-5gc\",pdr=~\".*[02468]\"}[2m])) by (ue_ip)",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
