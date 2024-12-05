@@ -130,11 +130,11 @@
                 ],
                 "upf": [
                     {
-                        "address": "upf.omec-upf-1",
+                        "address": "upf.aether-5gc-upf-1",
                         "display-name": "Aether UPF 2",
                         "upf-id": "upf-2",
                         "port": 8805,
-                        "config-endpoint": "http://upf-http.omec-upf-1.svc:8080"
+                        "config-endpoint": "http://upf-http.aether-5gc-upf-1.svc:8080"
                     }
                 ]
             }

@@ -14,7 +14,7 @@
                 },
                 "connectivity-service": {
                     "core-5g": {
-                        "endpoint": "http://webui.omec.svc:5000/config"
+                        "endpoint": "http://webui.aether-5gc.svc:5000/config"
                     }
                 },
                 "device": [
@@ -131,7 +131,7 @@
                         "display-name": "Aether UPF",
                         "upf-id": "upf-1",
                         "port": 8805,
-                        "config-endpoint": "http://upf-http.omec.svc:8080"
+                        "config-endpoint": "http://upf-http.aether-5gc.svc:8080"
                     }
                 ],
                 "slice": [
