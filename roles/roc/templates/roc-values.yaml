@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 global:
+  image:
+    registry: "registry.aetherproject.org/proxy/"
   atomix:
     storage:
       controller: "atomix-controller.kube-system:5679"
