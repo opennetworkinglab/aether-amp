@@ -4,7 +4,7 @@
 
 global:
   image:
-    registry: "registry.aetherproject.org/proxy/"
+    registry: "registry.aetherproject.org"
   atomix:
     storage:
       controller: "atomix-controller.kube-system:5679"
