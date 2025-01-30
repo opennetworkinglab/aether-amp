@@ -31,17 +31,27 @@
   when: inventory_hostname in groups['master_nodes']
   become: true
 
-- name: install python-setuptools package
+- name: install python3-setuptools package
   apt:
-    name: python-setuptools
+    name: python3-setuptools
   when: inventory_hostname in groups['master_nodes']
   become: true
+
+- set_fact:
+    UBUNTU_VERSION: "{{ ansible_distribution_version }}"
+  when: inventory_hostname in groups['master_nodes']
 
 - name: install openshift python package
   pip:
     name: openshift==0.12.1
     executable: pip3
-  when: inventory_hostname in groups['master_nodes']
+  when: inventory_hostname in groups['master_nodes'] and UBUNTU_VERSION is version_compare('24.04', '<')
+  become: true
+
+- name: install python3-openshift package
+  apt:
+    name: python3-openshift
+  when: inventory_hostname in groups['master_nodes'] and UBUNTU_VERSION is version_compare('24.04', '>=')
   become: true
 
 - name: add aether chart repo
@@ -113,4 +123,3 @@
   rescue:
     - debug:
         msg: "Failed to deploy aether monitor after multiple attempts."
-
