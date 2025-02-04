@@ -19,7 +19,7 @@
   when: inventory_hostname in groups['master_nodes']
 
 # TODO: add a local check to install local store
-# TODO: use kubctl module for anisble
+# TODO: use kubectl module for ansible
 - name: Setup Local Store
   shell:
     cmd: |
@@ -93,9 +93,9 @@
         done <<< "{{ pod_status.stdout }}"
       args:
         executable: /bin/bash
-      when: inventory_hostname in groups['master_nodes']      
+      when: inventory_hostname in groups['master_nodes']
 
-- name: deploy atomix from {{ amp.atomix.helm.chart_ref }}
+- name: deploy ROC from {{ amp.aether_roc.helm.chart_ref }}
   block:
     - name: deploy aether-roc-umbrella from {{ amp.aether_roc.helm.chart_ref }}
       kubernetes.core.helm:
@@ -130,7 +130,7 @@
         done <<< "{{ pod_status.stdout }}"
       args:
         executable: /bin/bash
-      when: inventory_hostname in groups['master_nodes']     
+      when: inventory_hostname in groups['master_nodes']
 
 - pause:
     seconds: 5
