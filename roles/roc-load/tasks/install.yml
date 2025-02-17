@@ -51,10 +51,5 @@
   when: inventory_hostname in groups['master_nodes']
 
 - debug:
-    var: result
+    var: result.stdout
   when: inventory_hostname in groups['master_nodes']
-#   name: Execute a command
-#   kubernetes.core.k8s_exec:
-#     namespace: myproject
-#     pod: zuul-scheduler
-#     command: zuul-scheduler full-reconfigure
