@@ -68,7 +68,7 @@
                         "dns-primary": "8.8.8.8",
                         "ip-domain-id": "ip-pool-2",
                         "mtu": 1460,
-                        "subnet": "172.248.0.0/16"
+                        "subnet": "{{ core.upf.additional_upfs['1'].ue_ip_pool }}"
                     }
                 ],
                 "device-group": [
