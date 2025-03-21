@@ -113,7 +113,7 @@
                         "dns-primary": "8.8.8.8",
                         "ip-domain-id": "ip-pool-1",
                         "mtu": 1460,
-                        "subnet": "172.250.0.0/16"
+                        "subnet": "{{ core.upf.default_upf.ue_ip_pool }}"
                     }
                 ],
                 "small-cell": [
