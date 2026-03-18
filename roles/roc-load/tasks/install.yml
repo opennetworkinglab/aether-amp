@@ -45,7 +45,7 @@
           --header "Content-Type: application/json" --data-raw \
           "$(cat /tmp/roc-models.json)"'
   register: result
-  until: result.stdout.find("command terminated") == -1
+  until: result.rc == 0
   retries: 5
   delay: 10
   when: inventory_hostname in groups['master_nodes']
