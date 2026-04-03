@@ -32,6 +32,11 @@
     helm dep up "{{ amp.aether_roc.helm.chart_ref }}"
   when: inventory_hostname in groups['master_nodes'] and amp.aether_roc.helm.local_charts
 
+- set_fact:
+    onos_helm_requires_repo_update: "{{ not (amp.onosproject.helm.chart_ref is match('^oci://')) }}"
+    roc_helm_requires_repo_update: "{{ (not amp.aether_roc.helm.local_charts) and not (amp.aether_roc.helm.chart_ref is match('^oci://')) }}"
+  when: inventory_hostname in groups['master_nodes']
+
 - name: deploy atomix from {{ amp.atomix.helm.chart_ref }}
   block:
     - name: deploy atomix-runtime from {{ amp.atomix.helm.chart_ref }}
@@ -50,7 +55,7 @@
 
     - name: deploy onos-operator from {{ amp.onosproject.helm.chart_ref }}
       kubernetes.core.helm:
-        update_repo_cache: true
+        update_repo_cache: "{{ onos_helm_requires_repo_update }}"
         name: onos-operator
         release_namespace: kube-system #aether-roc
         create_namespace: true
@@ -72,8 +77,12 @@
     - name: restart Pods if not running
       shell: |
         while IFS= read -r line; do
+          [[ -z "$line" ]] && continue
+
           name=$(echo "$line" | awk '{print $1}')
           status=$(echo "$line" | awk '{print $3}')
+
+          [[ -z "$name" || "$name" == "NAME" ]] && continue
 
           if [[ "$status" != "Running" && "$status" != "Completed" ]]; then
             kubectl delete pod "$name" -n kube-system
@@ -81,13 +90,15 @@
         done <<< "{{ pod_status.stdout }}"
       args:
         executable: /bin/bash
+      register: pod_restart
+      changed_when: "'deleted' in pod_restart.stdout"
       when: inventory_hostname in groups['master_nodes']
 
 - name: deploy ROC from {{ amp.aether_roc.helm.chart_ref }}
   block:
     - name: deploy aether-roc-umbrella from {{ amp.aether_roc.helm.chart_ref }}
       kubernetes.core.helm:
-        update_repo_cache: true
+        update_repo_cache: "{{ roc_helm_requires_repo_update }}"
         name: roc
         release_namespace: aether-roc
         create_namespace: true
@@ -109,8 +120,12 @@
     - name: restart Pods if not running
       shell: |
         while IFS= read -r line; do
+          [[ -z "$line" ]] && continue
+
           name=$(echo "$line" | awk '{print $1}')
           status=$(echo "$line" | awk '{print $3}')
+
+          [[ -z "$name" || "$name" == "NAME" ]] && continue
 
           if [[ "$status" != "Running" && "$status" != "Completed" ]]; then
             kubectl delete pod "$name" -n aether-roc
@@ -118,6 +133,8 @@
         done <<< "{{ pod_status.stdout }}"
       args:
         executable: /bin/bash
+      register: pod_restart
+      changed_when: "'deleted' in pod_restart.stdout"
       when: inventory_hostname in groups['master_nodes']
 
 - pause:
