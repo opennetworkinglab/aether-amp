@@ -5,8 +5,8 @@ amp:
   aether_roc:
     helm:
       local_charts: false
-      chart_ref: aether/aether-roc-umbrella
-      chart_version: 2.1.36
+      chart_ref: oci://ghcr.io/onosproject/charts/aether-roc-umbrella
+      chart_version: 2.1.40
 
   atomix:
     helm:
@@ -15,7 +15,7 @@ amp:
 
   onosproject:
     helm:
-      chart_ref: onosproject/onos-operator
+      chart_ref: oci://ghcr.io/onosproject/charts/onos-operator
       chart_version: 0.5.6
 
   store:
@@ -27,7 +27,7 @@ amp:
       chart_ref: rancher/rancher-monitoring
       chart_version: 101.0.0+up19.0.3
 
-  monitor-crd:
+  monitor_crd:
     helm:
       chart_ref: rancher/rancher-monitoring-crd
       chart_version: 101.0.0+up19.0.3

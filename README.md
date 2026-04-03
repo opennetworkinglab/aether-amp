@@ -2,25 +2,24 @@
 
 ## Aether Management Platform
 
-The amp repository builds Aether Management Platform that has Aether-ROC and Monitoring system. It utilizes the k8 repository as a submodule to create a multi-node cluster.
+The amp repository builds the Aether Management Platform with Aether-ROC and Monitoring. It relies on a k8s cluster that can be created from the k8s repository.
 
 To download the AMP repository, use the following command:
 ```
-git clone --recursive https://gitlab.com/onf-internship/amp.git
+git clone https://github.com/omec-project/aether-amp.git
 ```
 ### Step-by-Step Installation
-To install the amp, follow these steps:
-1. Install k8 cluster
-   - As AMF uses K8 submodule, install k8 cluster using `make k8s-install`
+To install AMP, follow these steps:
+1. Install a k8s cluster
+   - Provision a Kubernetes cluster before installing AMP. Use the companion k8s repository or another supported cluster provisioning workflow.
 2. Install ROC
-   - Specify helm charts for `atomix, onosproject, aether_roc`
-   - Run `roc-install`.
-   - Run `make 5g-roc-install` for 5G or `make 4g-roc-install` for 5G
-3. Install Monitering
-   - Specify helm charts for `monitor, monitor-crd`
-   - Run `monitor-install`.
+   - Specify Helm chart settings for `atomix`, `onosproject`, and `aether_roc`.
+   - Run `make roc-install`.
+3. Install Monitoring
+   - Specify Helm chart settings for `monitor` and `monitor_crd`.
+   - Run `make monitor-install`.
 
 #### One-Step Installation
-To install AMF in one go, run `amp-install`.
+To install AMP in one go, run `make amp-install`.
 #### Uninstall
-   - run `make amp-uninstall`
+   - Run `make amp-uninstall`.
