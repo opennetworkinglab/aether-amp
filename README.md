@@ -11,7 +11,7 @@ git clone https://github.com/omec-project/aether-amp.git
 ### Step-by-Step Installation
 To install AMP, follow these steps:
 1. Install a k8s cluster
-   - Install a cluster first (for example with `make k8s-install` in `deps/k8s`).
+   - Provision a Kubernetes cluster before installing AMP. Use the companion k8s repository or another supported cluster provisioning workflow.
 2. Install ROC
    - Specify Helm chart settings for `atomix`, `onosproject`, and `aether_roc`.
    - Run `make roc-install`.
